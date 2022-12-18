@@ -118,6 +118,7 @@
       });
 
       function showNewUserOnScreen(user) {
+
         document.getElementById("Expenses").value = "";
         document.getElementById("description").value = "";
         document.getElementById("inlineFormCustomSelect").value = "";
@@ -128,9 +129,9 @@
         }
 
         const parentNode = document.getElementById("listOfUsers");
-        const childHTML = `<li class="list-group-item" id=${user.Expenses}> ${user.Expenses} - ${user.Description} - ${user.category}
-                                        <button class="btn btn-danger float-right" onclick=deleteUser('${user.Expenses}')> Delete User </button>
-                                        <button class="btn btn-success float-right" onclick=editUserDetails('${user.Expenses}','${user.Description}')>Edit User </button>
+        const childHTML = `<li class="list-group-item" id=${user._id}> ${user.Expenses} - ${user.Description} - ${user.category}
+                                        <button class="btn btn-danger float-right" onclick=deleteUser('${user._id}')> Delete User </button>
+                                        <button class="btn btn-success float-right" onclick=editUserDetails('${user._id}','${user.Description}')>Edit User </button>
                                      </li>`;
 
         parentNode.innerHTML = parentNode.innerHTML + childHTML;
@@ -139,20 +140,26 @@
       function editUserDetails(Expenses, Description) {
         document.getElementById("Expenses").value = Expenses;
         document.getElementById("description").value = Description;
-        // document.getElementById("phonenumber").value = phonenumber;
+        
 
         deleteUser(Expenses);
       }
 
-      function deleteUser(Expenses) {
-        console.log(Expenses);
-        localStorage.removeItem(Expenses);
-        removeUserFromScreen(Expenses);
+      function deleteUser(userId) {
+        axios.delete(`https://crudcrud.com/api/36237da8186b469fbc242b80cc8e9cf3/AppointmentData/${userId}`).then((response) => {
+          removeUserFromScreen(userId);
+          
+        }).catch((err) => {
+          console.log(err);
+        })
+        
+        // localStorage.removeItem(Expenses);
+        // removeUserFromScreen(Expenses);
       }
 
-      function removeUserFromScreen(Expenses) {
+      function removeUserFromScreen(userId) {
         const parentNode = document.getElementById("listOfUsers");
-        const childNodeToBeDeleted = document.getElementById(Expenses);
+        const childNodeToBeDeleted = document.getElementById(userId);
         if (childNodeToBeDeleted) {
           parentNode.removeChild(childNodeToBeDeleted);
         }
