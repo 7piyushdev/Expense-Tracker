@@ -82,7 +82,7 @@
             obj
           )
           .then((response) => {
-            showNewUserOnScreen(response.data)
+            showNewUserOnScreen(response.data);
             console.log(response);
           })
           .catch((err) => {
@@ -93,15 +93,28 @@
       }
 
       window.addEventListener("DOMContentLoaded", () => {
-        const localStorageObj = localStorage;
-        const localstoragekeys = Object.keys(localStorageObj);
+        axios
+          .get(
+            "https://crudcrud.com/api/36237da8186b469fbc242b80cc8e9cf3/AppointmentData"
+          )
+          .then((response) => {
+            console.log(response);
+            for (var i = 0; i < response.data.length; i++) {
+              showNewUserOnScreen(response.data[i]);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        // const localStorageObj = localStorage;
+        // const localstoragekeys = Object.keys(localStorageObj);
 
-        for (var i = 0; i < localstoragekeys.length; i++) {
-          const key = localstoragekeys[i];
-          const userDetailsString = localStorageObj[key];
-          const userDetailsObj = JSON.parse(userDetailsString);
-          showNewUserOnScreen(userDetailsObj);
-        }
+        // for (var i = 0; i < localstoragekeys.length; i++) {
+        //   const key = localstoragekeys[i];
+        //   const userDetailsString = localStorageObj[key];
+        //   const userDetailsObj = JSON.parse(userDetailsString);
+        //   showNewUserOnScreen(userDetailsObj);
+        // }
       });
 
       function showNewUserOnScreen(user) {
