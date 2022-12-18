@@ -24,7 +24,13 @@
       <div class="row">
         <div class="col">
           <label for="number" class="col-sm-2 col-form-label"> Expenses</label>
-          <input type="number" id="Expenses" class="col-9" name="number" required />
+          <input
+            type="number"
+            id="Expenses"
+            class="col-9"
+            name="number"
+            required
+          />
         </div>
         <div class="col">
           <label for="description" class="col-sm-2 col-form-label">
@@ -35,7 +41,8 @@
             id="description"
             class="col-auto"
             name="decription"
-            required />
+            required
+          />
         </div>
         <div class="col-auto my-1">
           <label class="mr-sm-2" for="inlineFormCustomSelect">Preference</label>
@@ -51,28 +58,38 @@
           </select>
         </div>
         <div class="col-auto my-1">
-          <button type="submit" class="btn btn-primary">
-            Submit
-          </button>
+          <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </div>
     </form>
     <ul id="listOfUsers" class="list-group"></ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
     <script>
       function saveToLocalStorage(event) {
         event.preventDefault();
         const Expenses = event.target.number.value;
         const Description = event.target.description.value;
-        const category = event.target.category.value
+        const category = event.target.category.value;
 
         const obj = {
           Expenses,
           Description,
-        category,
+          category,
         };
-        console.log(obj);
-        localStorage.setItem(obj.Expenses, JSON.stringify(obj));
-        showNewUserOnScreen(obj);
+        axios
+          .post(
+            "https://crudcrud.com/api/36237da8186b469fbc242b80cc8e9cf3/AppointmentData",
+            obj
+          )
+          .then((response) => {
+            showNewUserOnScreen(response.data)
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        // localStorage.setItem(obj.Expenses, JSON.stringify(obj));
+        // showNewUserOnScreen(obj)
       }
 
       window.addEventListener("DOMContentLoaded", () => {
@@ -91,7 +108,7 @@
         document.getElementById("Expenses").value = "";
         document.getElementById("description").value = "";
         document.getElementById("inlineFormCustomSelect").value = "";
-        
+
         // console.log(localStorage.getItem(user.emailId))
         if (localStorage.getItem(user.Expenses) !== null) {
           removeUserFromScreen(user.Expenses);
@@ -127,7 +144,6 @@
           parentNode.removeChild(childNodeToBeDeleted);
         }
       }
-
     </script>
   </body>
 </html>
