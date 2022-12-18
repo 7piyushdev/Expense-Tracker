@@ -131,18 +131,18 @@
         const parentNode = document.getElementById("listOfUsers");
         const childHTML = `<li class="list-group-item" id=${user._id}> ${user.Expenses} - ${user.Description} - ${user.category}
                                         <button class="btn btn-danger float-right" onclick=deleteUser('${user._id}')> Delete User </button>
-                                        <button class="btn btn-success float-right" onclick=editUserDetails('${user._id}','${user.Description}')>Edit User </button>
+      <button class="btn btn-success float-right" onclick = editUserDetails('${user._id}','${user.Expenses}','${user.Description}')>Edit User</button>
                                      </li>`;
 
         parentNode.innerHTML = parentNode.innerHTML + childHTML;
       }
 
-      function editUserDetails(Expenses, Description) {
+      function editUserDetails(userId, Expenses, Description) {
         document.getElementById("Expenses").value = Expenses;
         document.getElementById("description").value = Description;
         
 
-        deleteUser(Expenses);
+        deleteUser(userId);
       }
 
       function deleteUser(userId) {
