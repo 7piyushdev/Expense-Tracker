@@ -1,0 +1,26 @@
+.header {
+    position: fixed;
+    top: 0;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    background-color: grey;
+    color: white;
+    height: 3rem;
+}
+
+.header ul{
+    background-color: beige;
+    color: black;
+    cursor: pointer;
+    list-style-type: none;
+    margin: 0;
+}
+
+.header p{
+    margin: 0;
+}
+
+.header ul li{
+    display: inline-block;
+}
